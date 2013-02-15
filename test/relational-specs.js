@@ -31,6 +31,16 @@ describe("Relational algebra functions", function() {
     });
   });
 
+  describe("L.$.RQL.select", function() {
+    it("should return an array of uniq elements matching a predicate (curried)", function() {
+      var s = L.$(1,2,3,4,5,3,4,5);
+      var result = L.$.RQL.select(L.isOdd)(s);
+
+      expect(result.constructor).toBe(Array);
+      expect(result).toEqual([1,3,5]);
+    });
+  });
+
   describe("L.$.project", function() {
     it("should return an array of objects with only the keys wanted", function() {
       var s = L.$({a: 1, b: 2}, {a: 2, b: 4});
