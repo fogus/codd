@@ -80,11 +80,11 @@ describe("Relational algebra functions", function() {
     });
   });
 
-  describe("L.$.RQL.rename", function() {
+  describe("L.$.RQL.as", function() {
     it("should rename the keys in an array of objects with according to a mapping in the given object (curried)", function() {
       var s  = [{'a': 1, 'b': 2}, {'a': 3}, {'b': 4}];
       var st = [{'AAA': 1, 'b': 2}, {'AAA': 3}, {'b': 4}];
-      var result = L.$.RQL.rename({'a': 'AAA'})(s);
+      var result = L.$.RQL.as({'a': 'AAA'})(s);
 
       expect(result.constructor).toBe(Array);
       expect(result).toEqual(st);
@@ -93,7 +93,7 @@ describe("Relational algebra functions", function() {
     it("should not modify the original array of objects", function() {
       var s  = [{'a': 1, 'b': 2}, {'a': 3}, {'b': 4}];
       var target = [{'a': 1, 'b': 2}, {'a': 3}, {'b': 4}];
-      var _ = L.$.RQL.rename({'a': 'AAA'})(s);
+      var _ = L.$.RQL.as({'a': 'AAA'})(s);
 
       expect(s).toEqual(target);
     });
