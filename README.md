@@ -12,13 +12,17 @@ currently available functions:
   '$.project',
   '$.put',
   '$.rename',
-  '$.select',
-  '$.toSet' ]
+  '$.restrict',
+  '$.toSet',
+  '$.RQL.as',
+  '$.RQL.select',
+  '$.RQL.where' ]
 ```
 
 Influences / References
 -----------------------
 
+* *[SQL and Relational Theory: How to Write Accurate SQL Code](http://www.amazon.com/gp/product/1449316409/?tag=fogus-20)* by CJ Data
 * [Clojure and ClojureScript](http://www.clojuredocs.org)
 * [Underscore.js](http://underscorejs.org/)
 * [Functional JavaScript](http://osteele.com/sources/javascript/functional/) by Oliver Steele
