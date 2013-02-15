@@ -51,10 +51,10 @@ describe("Relational algebra functions", function() {
     });
   });
 
-  describe("L.$.RQL.project", function() {
+  describe("L.$.RQL.select", function() {
     it("should return an array of objects with only the keys wanted (curried)", function() {
       var s = L.$({a: 1, b: 2}, {a: 2, b: 4});
-      var result = L.$.RQL.project(['a'])(s);
+      var result = L.$.RQL.select(['a'])(s);
 
       expect(result.constructor).toBe(Array);
       expect(result).toEqual([{a: 1}, {a: 2}]);
