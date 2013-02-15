@@ -80,6 +80,25 @@ describe("Relational algebra functions", function() {
     });
   });
 
+  describe("L.$.RQL.rename", function() {
+    it("should rename the keys in an array of objects with according to a mapping in the given object (curried)", function() {
+      var s  = [{'a': 1, 'b': 2}, {'a': 3}, {'b': 4}];
+      var st = [{'AAA': 1, 'b': 2}, {'AAA': 3}, {'b': 4}];
+      var result = L.$.RQL.rename({'a': 'AAA'})(s);
+
+      expect(result.constructor).toBe(Array);
+      expect(result).toEqual(st);
+    });
+
+    it("should not modify the original array of objects", function() {
+      var s  = [{'a': 1, 'b': 2}, {'a': 3}, {'b': 4}];
+      var target = [{'a': 1, 'b': 2}, {'a': 3}, {'b': 4}];
+      var _ = L.$.RQL.rename({'a': 'AAA'})(s);
+
+      expect(s).toEqual(target);
+    });
+  });
+
   describe("L.$.lookup", function() {
     it("should return an array of objects matching the key given in the index", function() {
       var testIndex = [[{a: 1}, {name: 'foo', a: 1}, {name: 'bar', a: 1}], [{a: 2}, {a: 2, name: 'baz'}]];
