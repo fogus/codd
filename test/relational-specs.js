@@ -24,7 +24,7 @@ describe("Relational algebra functions", function() {
   describe("L.$.select", function() {
     it("should return an array of uniq elements matching a predicate", function() {
       var s = L.$(1,2,3,4,5,3,4,5);
-      var result = L.$.select(L.isOdd, s);
+      var result = L.$.select(s, L.isOdd);
 
       expect(result.constructor).toBe(Array);
       expect(result).toEqual([1,3,5]);
