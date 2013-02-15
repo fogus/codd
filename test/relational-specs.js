@@ -31,10 +31,10 @@ describe("Relational algebra functions", function() {
     });
   });
 
-  describe("L.$.RQL.select", function() {
+  describe("L.$.RQL.where", function() {
     it("should return an array of uniq elements matching a predicate (curried)", function() {
       var s = L.$(1,2,3,4,5,3,4,5);
-      var result = L.$.RQL.select(L.isOdd)(s);
+      var result = L.$.RQL.where(L.isOdd)(s);
 
       expect(result.constructor).toBe(Array);
       expect(result).toEqual([1,3,5]);
