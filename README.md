@@ -1,7 +1,7 @@
-cod.js
-======
+Codd
+====
 
-a functional programming library built on, and extending, [Underscore.js](http://underscorejs.org) and [Lemonad](http://www.functionaljavascript.org).
+A functional programming library built on, and extending, [Underscore.js](http://underscorejs.org) and [Lemonad](http://www.functionaljavascript.org) to provide relational algebra operations in JavaScript.
 
 currently available functions:
 
