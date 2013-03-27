@@ -1,0 +1,28 @@
+{
+  "name": "codd",
+  "version": "0.6.0",
+  "description": "JavaScript functional programming library providing relational algebra operations.",
+  "homepage": "http://www.fogus.me/",
+  "contributors": [
+    "Fogus <me@fogus.me> (<http://www.fogus.me>)"
+  ],
+  "dependencies": {
+    "underscore": ">= 1.4.3",
+    "lemonad": ">= 0.4.9"
+  },
+  "main": "./lib/codd",
+  "keywords": [
+    "underscore",
+    "functional programming",
+    "relational algebra"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fogus/codd.git"
+  }
+}
+
