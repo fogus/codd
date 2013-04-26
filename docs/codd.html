@@ -64,8 +64,7 @@
 
             </div>
             
-            <div class="content"><div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span> <span class="o">||</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;underscore&#39;</span><span class="p">);</span>
-  <span class="kd">var</span> <span class="nx">L</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">L</span> <span class="o">||</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;lemonad&#39;</span><span class="p">);</span></pre></div></div>
+            <div class="content"><div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">_</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_</span> <span class="o">||</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;underscore&#39;</span><span class="p">);</span></pre></div></div>
             
         </li>
         
@@ -82,7 +81,7 @@
             </div>
             
             <div class="content"><div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">Codd</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">array</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">L</span><span class="p">.</span><span class="nx">$</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">array</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">uniq</span><span class="p">(</span><span class="nx">array</span><span class="p">);</span>
   <span class="p">};</span></pre></div></div>
             
         </li>
@@ -99,7 +98,7 @@
 
             </div>
             
-            <div class="content"><div class="highlight"><pre>  <span class="nx">Codd</span><span class="p">.</span><span class="nx">VERSION</span> <span class="o">=</span> <span class="s1">&#39;0.6.5&#39;</span><span class="p">;</span></pre></div></div>
+            <div class="content"><div class="highlight"><pre>  <span class="nx">Codd</span><span class="p">.</span><span class="nx">VERSION</span> <span class="o">=</span> <span class="s1">&#39;0.7.0&#39;</span><span class="p">;</span></pre></div></div>
             
         </li>
         
@@ -119,7 +118,7 @@
 
   <span class="nx">Codd</span><span class="p">.</span><span class="nx">restrict</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">xset</span><span class="p">,</span> <span class="nx">pred</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span><span class="nx">xset</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">if</span> <span class="p">(</span><span class="nx">L</span><span class="p">.</span><span class="nx">truthy</span><span class="p">(</span><span class="nx">pred</span><span class="p">(</span><span class="nx">val</span><span class="p">)))</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">truthy</span><span class="p">(</span><span class="nx">pred</span><span class="p">(</span><span class="nx">val</span><span class="p">)))</span>
         <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
       <span class="k">else</span>
         <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">without</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">val</span><span class="p">);</span>
@@ -128,12 +127,12 @@
 
   <span class="nx">Codd</span><span class="p">.</span><span class="nx">project</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">table</span><span class="p">,</span> <span class="nx">ks</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">table</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">rel</span><span class="p">)</span> <span class="p">{</span>
-      <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">pick</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">L</span><span class="p">.</span><span class="nx">cons</span><span class="p">(</span><span class="nx">rel</span><span class="p">,</span> <span class="nx">ks</span><span class="p">));</span>
+      <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">pick</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">_</span><span class="p">.</span><span class="nx">cons</span><span class="p">(</span><span class="nx">rel</span><span class="p">,</span> <span class="nx">ks</span><span class="p">));</span>
     <span class="p">});</span>
   <span class="p">};</span>
 
   <span class="nx">Codd</span><span class="p">.</span><span class="nx">rename</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">table</span><span class="p">,</span> <span class="nx">mappings</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">table</span><span class="p">,</span> <span class="nx">L</span><span class="p">.</span><span class="nx">curry2</span><span class="p">(</span><span class="nx">L</span><span class="p">.</span><span class="nx">renameKeys</span><span class="p">)(</span><span class="nx">mappings</span><span class="p">));</span>
+    <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">table</span><span class="p">,</span> <span class="nx">L</span><span class="p">.</span><span class="nx">curry2</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">renameKeys</span><span class="p">)(</span><span class="nx">mappings</span><span class="p">));</span>
   <span class="p">};</span>
 
   <span class="nx">Codd</span><span class="p">.</span><span class="nx">lookup</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">obj</span><span class="p">,</span> <span class="nx">alt</span><span class="p">)</span> <span class="p">{</span>
@@ -158,18 +157,18 @@
     <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">entry</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">if</span> <span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">isEqual</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">first</span><span class="p">(</span><span class="nx">entry</span><span class="p">),</span> <span class="nx">key</span><span class="p">))</span> <span class="p">{</span>
         <span class="nx">found</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
-        <span class="k">return</span> <span class="nx">L</span><span class="p">.</span><span class="nx">cat</span><span class="p">([</span><span class="nx">key</span><span class="p">,</span> <span class="nx">element</span><span class="p">],</span> <span class="nx">_</span><span class="p">.</span><span class="nx">rest</span><span class="p">(</span><span class="nx">entry</span><span class="p">));</span>
+        <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">cat</span><span class="p">([</span><span class="nx">key</span><span class="p">,</span> <span class="nx">element</span><span class="p">],</span> <span class="nx">_</span><span class="p">.</span><span class="nx">rest</span><span class="p">(</span><span class="nx">entry</span><span class="p">));</span>
       <span class="p">}</span>
 
       <span class="k">return</span> <span class="nx">entry</span><span class="p">;</span>
     <span class="p">});</span>
 
-    <span class="k">return</span> <span class="nx">found</span> <span class="o">?</span> <span class="nx">result</span> <span class="o">:</span> <span class="nx">L</span><span class="p">.</span><span class="nx">cons</span><span class="p">([</span><span class="nx">key</span><span class="p">,</span> <span class="nx">element</span><span class="p">],</span> <span class="nx">result</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">found</span> <span class="o">?</span> <span class="nx">result</span> <span class="o">:</span> <span class="nx">_</span><span class="p">.</span><span class="nx">cons</span><span class="p">([</span><span class="nx">key</span><span class="p">,</span> <span class="nx">element</span><span class="p">],</span> <span class="nx">result</span><span class="p">);</span>
   <span class="p">};</span>
 
   <span class="nx">Codd</span><span class="p">.</span><span class="nx">index</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">table</span><span class="p">,</span> <span class="nx">ks</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span><span class="nx">table</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">rel</span><span class="p">)</span> <span class="p">{</span>
-      <span class="kd">var</span> <span class="nx">ik</span> <span class="o">=</span> <span class="nx">L</span><span class="p">.</span><span class="nx">selectKeys</span><span class="p">(</span><span class="nx">rel</span><span class="p">,</span> <span class="nx">ks</span><span class="p">);</span>
+      <span class="kd">var</span> <span class="nx">ik</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">selectKeys</span><span class="p">(</span><span class="nx">rel</span><span class="p">,</span> <span class="nx">ks</span><span class="p">);</span>
       <span class="kd">var</span> <span class="nx">iv</span> <span class="o">=</span> <span class="nx">Codd</span><span class="p">.</span><span class="nx">lookup</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">ik</span><span class="p">,</span> <span class="nx">Codd</span><span class="p">());</span>
 
       <span class="k">return</span> <span class="nx">Codd</span><span class="p">.</span><span class="nx">put</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">ik</span><span class="p">,</span> <span class="nx">rel</span><span class="p">);</span>
@@ -182,17 +181,17 @@
     <span class="kd">var</span> <span class="nx">ks</span>  <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">intersection</span><span class="p">(</span><span class="nx">xks</span><span class="p">,</span> <span class="nx">yks</span><span class="p">);</span>
 
     <span class="kd">var</span> <span class="nx">sz</span> <span class="o">=</span> <span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">size</span><span class="p">(</span><span class="nx">table1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">size</span><span class="p">(</span><span class="nx">table2</span><span class="p">))</span> <span class="o">?</span> <span class="p">[</span><span class="nx">table1</span><span class="p">,</span> <span class="nx">table2</span><span class="p">]</span> <span class="o">:</span> <span class="p">[</span><span class="nx">table2</span><span class="p">,</span> <span class="nx">table1</span><span class="p">];</span>
-    <span class="kd">var</span> <span class="nx">r</span>  <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">first</span><span class="p">(</span><span class="nx">sz</span><span class="p">);</span>
-    <span class="kd">var</span> <span class="nx">s</span>  <span class="o">=</span> <span class="nx">L</span><span class="p">.</span><span class="nx">second</span><span class="p">(</span><span class="nx">sz</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">r</span>  <span class="o">=</span> <span class="nx">sz</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="kd">var</span> <span class="nx">s</span>  <span class="o">=</span> <span class="nx">sz</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
 
     <span class="kd">var</span> <span class="nx">idx</span> <span class="o">=</span> <span class="nx">Codd</span><span class="p">.</span><span class="nx">index</span><span class="p">(</span><span class="nx">r</span><span class="p">,</span> <span class="nx">ks</span><span class="p">);</span>
 
     <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">o</span><span class="p">){</span>
-      <span class="kd">var</span> <span class="nx">found</span> <span class="o">=</span> <span class="nx">Codd</span><span class="p">.</span><span class="nx">lookup</span><span class="p">(</span><span class="nx">idx</span><span class="p">,</span> <span class="nx">L</span><span class="p">.</span><span class="nx">selectKeys</span><span class="p">(</span><span class="nx">o</span><span class="p">,</span> <span class="nx">ks</span><span class="p">));</span>
+      <span class="kd">var</span> <span class="nx">found</span> <span class="o">=</span> <span class="nx">Codd</span><span class="p">.</span><span class="nx">lookup</span><span class="p">(</span><span class="nx">idx</span><span class="p">,</span> <span class="nx">_</span><span class="p">.</span><span class="nx">selectKeys</span><span class="p">(</span><span class="nx">o</span><span class="p">,</span> <span class="nx">ks</span><span class="p">));</span>
 
-      <span class="k">if</span> <span class="p">(</span><span class="nx">L</span><span class="p">.</span><span class="nx">existy</span><span class="p">(</span><span class="nx">found</span><span class="p">))</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">existy</span><span class="p">(</span><span class="nx">found</span><span class="p">))</span>
         <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span><span class="nx">found</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">agg</span><span class="p">,</span> <span class="nx">rel</span><span class="p">){</span>
-          <span class="k">return</span> <span class="nx">L</span><span class="p">.</span><span class="nx">cons</span><span class="p">(</span><span class="nx">L</span><span class="p">.</span><span class="nx">merge</span><span class="p">(</span><span class="nx">rel</span><span class="p">,</span> <span class="nx">o</span><span class="p">),</span> <span class="nx">agg</span><span class="p">);</span>
+          <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">cons</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">merge</span><span class="p">(</span><span class="nx">rel</span><span class="p">,</span> <span class="nx">o</span><span class="p">),</span> <span class="nx">agg</span><span class="p">);</span>
         <span class="p">},</span> <span class="nx">result</span><span class="p">);</span>
       <span class="k">else</span>
         <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
