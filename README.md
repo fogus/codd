@@ -27,3 +27,7 @@ Influences / References
 * [Underscore.js](http://underscorejs.org/)
 * [Functional JavaScript](http://osteele.com/sources/javascript/functional/) by Oliver Steele
 * Functional JavaScript (the book)
+
+## License
+
+This software is provided as-is under the [MIT license](http://opensource.org/licenses/MIT).
