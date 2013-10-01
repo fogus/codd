@@ -26,7 +26,7 @@ describe("Relational algebra functions", function() {
       expect(result).toEqual([1,3,5]);
     });
   });
-/*
+
   describe("Codd.RQL.where", function() {
     it("should return an array of uniq elements matching a predicate (curried)", function() {
       var s = L.$(1,2,3,4,5,3,4,5);
@@ -46,7 +46,7 @@ describe("Relational algebra functions", function() {
       expect(result).toEqual([{a: 1}, {a: 2}]);
     });
   });
-
+/*
   describe("Codd.RQL.select", function() {
     it("should return an array of objects with only the keys wanted (curried)", function() {
       var s = L.$({a: 1, b: 2}, {a: 2, b: 4});
