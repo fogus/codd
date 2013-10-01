@@ -94,7 +94,7 @@ describe("Relational algebra functions", function() {
       expect(s).toEqual(target);
     });
   });
-/*
+
   describe("Codd.lookup", function() {
     it("should return an array of objects matching the key given in the index", function() {
       var testIndex = [[{a: 1}, {name: 'foo', a: 1}, {name: 'bar', a: 1}], [{a: 2}, {a: 2, name: 'baz'}]];
@@ -111,7 +111,7 @@ describe("Relational algebra functions", function() {
       expect(resultNo).toBe(undefined);
     });
   });
-
+/*
   describe("Codd.put", function() {
     it("should return an index with a new entry, even when the index is empty", function() {
       var testIndexEmpty = [];
