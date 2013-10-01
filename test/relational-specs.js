@@ -111,7 +111,7 @@ describe("Relational algebra functions", function() {
       expect(resultNo).toBe(undefined);
     });
   });
-/*
+
   describe("Codd.put", function() {
     it("should return an index with a new entry, even when the index is empty", function() {
       var testIndexEmpty = [];
@@ -126,7 +126,7 @@ describe("Relational algebra functions", function() {
       expect(Codd.put(testIndex, {a: 1}, 42)).toEqual(exp);
     });
   });
-
+/*
   describe("Codd.index", function() {
     it("should return an index of the objects based on the keys given", function() {
       var db = L.$({name: 'Burial', genre: 'dubstep'},
