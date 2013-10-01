@@ -126,7 +126,7 @@ describe("Relational algebra functions", function() {
       expect(Codd.put(testIndex, {a: 1}, 42)).toEqual(exp);
     });
   });
-/*
+
   describe("Codd.index", function() {
     it("should return an index of the objects based on the keys given", function() {
       var db = L.$({name: 'Burial', genre: 'dubstep'},
@@ -142,5 +142,4 @@ describe("Relational algebra functions", function() {
       expect(folk).toEqual([{name: 'Donovan', genre: 'folk'}]);
     });
   });
-*/
 });
