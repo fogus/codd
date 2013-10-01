@@ -26,7 +26,7 @@ describe("Relational algebra functions", function() {
       expect(result).toEqual([1,3,5]);
     });
   });
-
+/*
   describe("Codd.RQL.where", function() {
     it("should return an array of uniq elements matching a predicate (curried)", function() {
       var s = L.$(1,2,3,4,5,3,4,5);
@@ -142,4 +142,5 @@ describe("Relational algebra functions", function() {
       expect(folk).toEqual([{name: 'Donovan', genre: 'folk'}]);
     });
   });
+*/
 });
