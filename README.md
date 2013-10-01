@@ -6,13 +6,19 @@ A functional programming library built on, and extending, [Underscore.js](http:/
 currently available functions:
 
 ```javascript
-[ 'Codd.index',
+[ 'Codd.difference',
+  'Codd.index',
+  'Codd.intersection',
+  'Codd.keys',
   'Codd.lookup',
   'Codd.naturalJoin',
+  'Codd.omitKeys',
   'Codd.project',
   'Codd.put',
   'Codd.rename',
+  'Codd.renameKeys',
   'Codd.restrict',
+  'Codd.selectKeys',
   'Codd.toSet',
   'Codd.RQL.as',
   'Codd.RQL.select',

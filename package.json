@@ -7,7 +7,7 @@
     "Fogus <me@fogus.me> (<http://www.fogus.me>)"
   ],
   "dependencies": {
-    "lemonad": ">= 0.7.0"
+    "lemonad": ">= 0.7.2"
   },
   "main": "./lib/codd",
   "keywords": [
