@@ -75,7 +75,7 @@ describe("Relational algebra functions", function() {
       expect(s).toEqual(target);
     });
   });
-/*
+
   describe("Codd.RQL.as", function() {
     it("should rename the keys in an array of objects with according to a mapping in the given object (curried)", function() {
       var s  = [{'a': 1, 'b': 2}, {'a': 3}, {'b': 4}];
@@ -94,7 +94,7 @@ describe("Relational algebra functions", function() {
       expect(s).toEqual(target);
     });
   });
-
+/*
   describe("Codd.lookup", function() {
     it("should return an array of objects matching the key given in the index", function() {
       var testIndex = [[{a: 1}, {name: 'foo', a: 1}, {name: 'bar', a: 1}], [{a: 2}, {a: 2, name: 'baz'}]];
