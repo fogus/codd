@@ -37,6 +37,16 @@ describe("Relational algebra functions", function() {
     });
   });
 
+  describe("Codd.union", function() {
+    it("should return an array of L u R", function() {
+      var L = Codd.toSet([1,2,3,4,5]);
+      var R = Codd.toSet([1,2,6,7]);
+
+      expect(Codd.union(R)(L)).toEqual([1,2,3,4,5,6,7]);
+      expect(Codd.union(L)(R)).toEqual([1,2,3,4,5,6,7]);
+    });
+  });
+
   describe("Codd.restrict", function() {
     it("should return an array of uniq elements matching a predicate", function() {
       var s = L.$(1,2,3,4,5,3,4,5);
