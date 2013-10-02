@@ -20,6 +20,7 @@ currently available functions:
   'Codd.restrict',
   'Codd.selectKeys',
   'Codd.toSet',
+  'Codd.union',
   'Codd.RQL.as',
   'Codd.RQL.select',
   'Codd.RQL.where' ]
