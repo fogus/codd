@@ -1,6 +1,6 @@
 {
   "name": "codd",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "JavaScript functional programming library providing relational algebra operations.",
   "homepage": "http://www.fogus.me/",
   "contributors": [
