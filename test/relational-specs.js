@@ -17,6 +17,16 @@ describe("Relational algebra functions", function() {
     });
   });
 
+  describe("Codd.difference", function() {
+    it("should return an array of L - R", function() {
+      var L = Codd.toSet([1,2,3,4,5]);
+      var R = Codd.toSet([1,2]);
+
+      expect(Codd.difference(R)(L)).toEqual([3,4,5]);
+      expect(Codd.difference(L)(R)).toEqual([]);
+    });
+  });
+
   describe("Codd.restrict", function() {
     it("should return an array of uniq elements matching a predicate", function() {
       var s = L.$(1,2,3,4,5,3,4,5);
