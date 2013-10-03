@@ -7,7 +7,7 @@ A functional programming library built on [Lemonad](http://www.functionaljavascr
 
 Add the following to your 'package.json' file in the `"dependencies"` section:
 
-    "codd": "0.8.2"
+    "codd": "0.8.3"
 
 ## Currently available functions:
 
