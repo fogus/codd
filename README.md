@@ -3,7 +3,13 @@ Codd
 
 A functional programming library built on [Lemonad](http://www.functionaljavascript.org) to provide relational algebra operations in JavaScript.
 
-currently available functions:
+## Using
+
+Add the following to your 'package.json' file in the `"dependencies"` section:
+
+    "codd": "0.8.2"
+
+## Currently available functions:
 
 ```javascript
 [ 'Codd.difference',
@@ -22,6 +28,8 @@ currently available functions:
   'Codd.toSet',
   'Codd.union',
   'Codd.RQL.as',
+  'Codd.RQL.field',
+  'Codd.RQL.like',
   'Codd.RQL.select',
   'Codd.RQL.where' ]
 ```
