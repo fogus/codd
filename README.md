@@ -1,7 +1,7 @@
 Codd
 ====
 
-A functional programming library built on [Lemonad](http://www.functionaljavascript.org) to provide relational algebra operations in JavaScript.
+A functional programming library built on [Lemonad](http://www.functionaljs.org) to provide relational algebra operations in JavaScript.
 
 ## Using
 
