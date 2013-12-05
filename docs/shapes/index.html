@@ -455,6 +455,10 @@
         </section>
 
         <section>
+	  <h2>Codd.project</h2>
+        </section>
+
+        <section>
           <pre class="context">
 	    var itunes = [{'artist' : 'Sun Ra', 'genre'  : 'Jazz', 'plays'  : 379}, {'artist' : 'Om', 'genre'  : 'Doom', 'plays'  : 22}, {'artist' : 'Can', 'genre'  : 'Prog', 'plays'  : 190}, {'artist' : 'Popol Vuh', 'genre'  : 'Prog', 'plays'  : 285}];
           </pre>
@@ -484,7 +488,7 @@
 	    Codd.project(itunes, ['artist', 'plays']);
 
 	    /***
-	     SELECT 'artist', 'plays' FROM itunes;
+	     SELECT artist,plays FROM itunes;
 	     ***/
 	  </pre>
         </section>
@@ -509,10 +513,80 @@
 	    _.sortBy(Codd.project(itunes, ['artist', 'plays']), 'plays');
 
 	    /***
-	     SELECT 'artist', 'plays' FROM itunes
-	      ORDER BY 'plays';
+	     SELECT artist,plays FROM itunes
+	     ORDER BY plays;
 	     ***/
 	  </pre>
+        </section>
+
+        <section>
+	  <h2>Codd.rename</h2>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var itunes = [{'artist' : 'Sun Ra', 'genre'  : 'Jazz', 'plays'  : 379}, {'artist' : 'Om', 'genre'  : 'Doom', 'plays'  : 22}, {'artist' : 'Can', 'genre'  : 'Prog', 'plays'  : 190}, {'artist' : 'Popol Vuh', 'genre'  : 'Prog', 'plays'  : 285}];
+          </pre>
+
+          <pre class="repl">
+	    _.sortBy(Codd.rename(Codd.project(itunes, ['artist', 'plays']), {artist: 'band'}), 'plays');
+	  </pre>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var itunes = [{'artist' : 'Sun Ra', 'genre'  : 'Jazz', 'plays'  : 379}, {'artist' : 'Om', 'genre'  : 'Doom', 'plays'  : 22}, {'artist' : 'Can', 'genre'  : 'Prog', 'plays'  : 190}, {'artist' : 'Popol Vuh', 'genre'  : 'Prog', 'plays'  : 285}];
+          </pre>
+
+          <pre class="repl">
+	    _.sortBy(Codd.rename(Codd.project(itunes, ['artist', 'plays']), {artist: 'band'}), 'plays');
+
+	    /***
+	     SELECT artist AS "band", plays 
+	     FROM itunes
+	     ORDER BY plays;
+	     ***/
+	  </pre>
+        </section>
+
+        <section>
+	  <h2>Codd.restrict</h2>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var itunes = [{'artist' : 'Sun Ra', 'genre'  : 'Jazz', 'plays'  : 379}, {'artist' : 'Om', 'genre'  : 'Doom', 'plays'  : 22}, {'artist' : 'Can', 'genre'  : 'Prog', 'plays'  : 190}, {'artist' : 'Popol Vuh', 'genre'  : 'Prog', 'plays'  : 285}];
+          </pre>
+
+          <pre class="repl">
+	    _.sortBy(Codd.restrict(Codd.rename(Codd.project(itunes, ['artist', 'plays']), {artist: 'band'}), function(cell) { return cell.plays > 200 }), 'plays');
+	  </pre>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var itunes = [{'artist' : 'Sun Ra', 'genre'  : 'Jazz', 'plays'  : 379}, {'artist' : 'Om', 'genre'  : 'Doom', 'plays'  : 22}, {'artist' : 'Can', 'genre'  : 'Prog', 'plays'  : 190}, {'artist' : 'Popol Vuh', 'genre'  : 'Prog', 'plays'  : 285}];
+          </pre>
+
+          <pre class="repl">
+	    _.sortBy(Codd.restrict(Codd.rename(Codd.project(itunes, ['artist', 'plays']), {artist: 'band'}), function(cell) { return cell.plays > 200 }), 'plays');
+
+	    /***
+	     SELECT artist AS "band", plays 
+	     FROM itunes
+	     WHERE plays > 200
+	     ORDER BY plays;
+	     ***/
+	  </pre>
+        </section>
+
+        <section>
+	  <h2>L.pipeline</h2>
+        </section>
+
+
+        <section>
+	  <h2>L.pipeline</h2>
         </section>
 
 
