@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8"/>
+
+    <title>The Shape of Functional Programming</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="css/reveal.min.css"/>
+    <link rel="stylesheet" href="css/theme/hipster.css" id="theme"/>
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/tomorrow-night-eighties.css"/>
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+
+        <section class="title-slide">
+          <p>The Shape of Functional Programming</p>
+          <img src="m/shape-title.png"/>
+        </section>
+
+        <section>
+          <p class="small centre">@fogus</p>
+          <img src="m/me.png"/>
+        </section>
+
+        <section>
+          <p class="small centre">@fogus</p>
+          <img src="m/me2.png"/>
+        </section>
+
+        <section>
+          <img src="m/oo.png"/>
+        </section>
+
+        <section>
+          <img src="m/fp.png"/>
+        </section>
+
+        <section>
+          <img src="m/paper.png"/>
+        </section>
+
+        <section>
+          <pre class="repl">
+	    var array = [0,1,2,3,4,5];
+
+	    var transformed = [];
+
+	    for (var i = 0; i < array.length; i++) {
+	      transformed.push(array[i] + 100);
+	    }
+
+	    transformed;
+          </pre>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var array = [0,1,2,3,4,5];
+	  </pre>
+
+          <pre class="repl">
+	    // Underscore
+
+	    _.map(array, function(n) { 
+	      return n + 100;
+	    });
+
+
+	    // Lemonad
+
+	    L.map(L.add(100), array);
+          </pre>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var array = [0,1,2,3,4,5];
+	  </pre>
+
+          <pre class="repl">
+	    var keepers = [];
+
+	    for (var i = 0; i < array.length; i++) {
+	      if (array[i] % 2 === 0) {
+	        keepers.push(array[i]);
+	      }
+	    }
+
+	    keepers;
+          </pre>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var array = [0,1,2,3,4,5];
+	  </pre>
+
+          <pre class="repl">
+	    // Underscore
+
+	    _.filter(array, function(n) {
+	      if (n % 2 === 0) {
+	        return true;
+	      }
+	      else {
+	        return false;
+	      }
+	    });
+
+	    // Lemonad
+
+	    L.filter(L.isEven, array);
+          </pre>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var array = [0,1,2,3,4,5];
+	  </pre>
+          <pre class="repl">
+	    var sum = 0;
+
+	    for (var i = 0; i < array.length; i++) {
+	      sum += array[i];
+	    }
+
+	    sum;
+          </pre>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var array = [0,1,2,3,4,5];
+	  </pre>
+
+          <pre class="repl">
+	    // Underscore
+
+	    _.reduce(array, function(acc, n) { 
+	      return acc + n;
+	    }, 0);
+
+
+	    // Lemonad
+
+	    L.reduce(L.uncurry(L.add), 0, array);
+          </pre>
+        </section>
+
+        <section>
+          <img src="m/apl.png"/>
+        </section>
+
+        <section>
+	  <h2>Fun.js at a glance</h2>
+	  <ul>
+	    <li>Simple data</li>
+	    <li>Small functions</li>
+	    <li>Larger abstractions built via composition</li>
+	    <li>OO to supplement</li>
+	    <li>No dogma</li>
+	  </ul>
+        </section>
+
+        <section>
+	  <h2>simple data</h2>
+        </section>
+
+        <section>
+          <img src="m/str.png"/>
+        </section>
+
+        <section>
+          <img src="m/num.png"/>
+        </section>
+
+        <section>
+          <h1>42</h1>
+        </section>
+
+        <section>
+          <img src="m/bool.png"/>
+        </section>
+
+        <section>
+          <img src="m/sqr.png"/>
+        </section>
+
+        <section>
+          <img src="m/sqr-ary.png"/>
+        </section>
+
+        <section>
+          <img src="m/sqr-ary-nums.png"/>
+        </section>
+
+        <section>
+          <img src="m/sqr-ary-nums-ans.png"/>
+        </section>
+
+        <section>
+          <img src="m/pent.png"/>
+        </section>
+
+        <section>
+          <img src="m/pent-obj.png"/>
+        </section>
+
+        <section>
+          <img src="m/pent-obj-str2nums.png"/>
+        </section>
+
+        <section>
+          <img src="m/pent-obj-str2nums-ans.png"/>
+        </section>
+
+        <section>
+          <img src="m/pent-obj-nums.png"/>
+        </section>
+
+        <section>
+          <img src="m/any.png"/>
+        </section>
+
+        <section>
+          <img src="m/any-star.png"/>
+        </section>
+
+        <section>
+	  <h2>small functions</h2>
+        </section>
+
+        <section>
+          <img src="m/fun.png"/>
+        </section>
+
+        <section>
+          <img src="m/lamb-up.png"/>
+        </section>
+
+        <section>
+          <img src="m/lamb-l.png"/>
+        </section>
+
+        <section>
+          <img src="m/lamb-r.png"/>
+        </section>
+
+        <section>
+          <img src="m/rage.png"/>
+        </section>
+
+        <section>
+          <img src="m/simple-fun.png"/>
+        </section>
+
+        <section>
+          <pre class="repl">
+	    function nth(array, index) {
+	      return array[index];
+	    }
+
+
+	    nth(['a', 'b', 'c'], 1);
+          </pre>
+
+        </section>
+
+        <section>
+          <img src="m/map-shape.png"/>
+        </section>
+
+        <section>
+          <img src="m/reduce-shape.png"/>
+        </section>
+
+        <section>
+          <img src="m/filter-shape.png"/>
+        </section>
+
+        <section>
+	  <h2>abstractions, composed from primitives</h2>
+        </section>
+
+        <section>
+          <img src="m/table-shape.png" height="75%" width="75%"/>
+        </section>
+
+        <section>
+          <img src="m/table.png"/>
+        </section>
+
+        <section>
+          <img src="m/table-shape.png" height="75%" width="75%"/>
+        </section>
+
+        <section>
+          <img src="m/data-table.png" height="75%" width="75%"/>
+        </section>
+
+        <section>
+          <pre class="repl">
+	   var table = [
+
+	    {id:   '555-55-5555',
+	     name: 'Moe',
+	     age:  45},
+
+	    {id:   '777-77-7777',
+	     name: 'Curly',
+	     age:  47}
+
+	    ];
+          </pre>
+        </section>
+
+        <section>
+          <img src="m/table-cell.png"/>
+        </section>
+
+        <section>
+          <img src="m/cell-shape.png"/>
+        </section>
+
+        <section>
+          <pre class="context">
+	   var table = [
+
+	    {id:   '555-55-5555',
+	     name: 'Moe',
+	     age:  45},
+
+	    {id:   '777-77-7777',
+	     name: 'Curly',
+	     age:  47}
+
+	    ];
+          </pre>
+
+          <pre class="repl">
+	    function cell(table, col, row){ 
+	      return table[row][col];
+	    }
+
+
+	    cell(table, "name", 0);
+
+
+	    cell(table, "age", 0);
+	  </pre>
+        </section>
+
+        <section>
+          <img src="m/ted-codd.png"/>
+          <div class="pic-label bigger">
+            Codd.js
+          </div>
+        </section>
+
+        <section>
+          <pre class="repl">
+	    var itunes = [
+	        {'artist' : 'Sun Ra',
+	         'genre'  : 'Jazz',
+	         'plays'  : 379},
+
+	        {'artist' : 'Om',
+	         'genre'  : 'Doom',
+	         'plays'  : 22},
+
+	        {'artist' : 'Can',
+	         'genre'  : 'Prog',
+	         'plays'  : 190},
+
+	        {'artist' : 'Popol Vuh',
+	         'genre'  : 'Prog',
+	         'plays'  : 285}
+	    ];
+          </pre>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var itunes = [
+	        {'artist' : 'Sun Ra',
+	         'genre'  : 'Jazz',
+	         'plays'  : 379},
+
+	        {'artist' : 'Om',
+	         'genre'  : 'Doom',
+	         'plays'  : 22},
+
+	        {'artist' : 'Can',
+	         'genre'  : 'Prog',
+	         'plays'  : 190},
+
+	        {'artist' : 'Popol Vuh',
+	         'genre'  : 'Prog',
+	         'plays'  : 285}
+	    ];
+          </pre>
+
+          <pre class="repl">
+	    function cell(col, row, table) {
+	      var entry = table[row];
+	      return entry && entry[col];
+	    }
+
+	    cell('artist', 1, itunes);
+	  </pre>
+        </section>
+
+
+        <section>
+          <pre class="context">
+	    var itunes = [{'artist' : 'Sun Ra', 'genre'  : 'Jazz', 'plays'  : 379}, {'artist' : 'Om', 'genre'  : 'Doom', 'plays'  : 22}, {'artist' : 'Can', 'genre'  : 'Prog', 'plays'  : 190}, {'artist' : 'Popol Vuh', 'genre'  : 'Prog', 'plays'  : 285}];
+          </pre>
+
+          <pre class="repl">
+	    function cell(col, row, table) {
+	      var entry = table[row];
+	      return entry && entry[col];
+	    }
+
+
+	    function getArtists(library) {
+	      var ret = [];
+
+	      for (var i = 0; i < library.length; i++) {
+	        ret.push(cell('artist', i, library));
+	      }
+
+	      return ret;
+	    }
+
+	    getArtists(itunes);
+	  </pre>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var itunes = [{'artist' : 'Sun Ra', 'genre'  : 'Jazz', 'plays'  : 379}, {'artist' : 'Om', 'genre'  : 'Doom', 'plays'  : 22}, {'artist' : 'Can', 'genre'  : 'Prog', 'plays'  : 190}, {'artist' : 'Popol Vuh', 'genre'  : 'Prog', 'plays'  : 285}];
+          </pre>
+
+          <pre class="repl">
+	    Codd.project(itunes, ['artist']);
+	  </pre>
+        </section>
+
+
+        <section>
+          <pre class="context">
+	    var itunes = [{'artist' : 'Sun Ra', 'genre'  : 'Jazz', 'plays'  : 379}, {'artist' : 'Om', 'genre'  : 'Doom', 'plays'  : 22}, {'artist' : 'Can', 'genre'  : 'Prog', 'plays'  : 190}, {'artist' : 'Popol Vuh', 'genre'  : 'Prog', 'plays'  : 285}];
+          </pre>
+
+          <pre class="repl">
+	    Codd.project(itunes, ['artist', 'plays']);
+	  </pre>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var itunes = [{'artist' : 'Sun Ra', 'genre'  : 'Jazz', 'plays'  : 379}, {'artist' : 'Om', 'genre'  : 'Doom', 'plays'  : 22}, {'artist' : 'Can', 'genre'  : 'Prog', 'plays'  : 190}, {'artist' : 'Popol Vuh', 'genre'  : 'Prog', 'plays'  : 285}];
+          </pre>
+
+          <pre class="repl">
+	    Codd.project(itunes, ['artist', 'plays']);
+
+	    /***
+	     SELECT 'artist', 'plays' FROM itunes;
+	     ***/
+	  </pre>
+        </section>
+
+
+        <section>
+          <pre class="context">
+	    var itunes = [{'artist' : 'Sun Ra', 'genre'  : 'Jazz', 'plays'  : 379}, {'artist' : 'Om', 'genre'  : 'Doom', 'plays'  : 22}, {'artist' : 'Can', 'genre'  : 'Prog', 'plays'  : 190}, {'artist' : 'Popol Vuh', 'genre'  : 'Prog', 'plays'  : 285}];
+          </pre>
+
+          <pre class="repl">
+	    _.sortBy(Codd.project(itunes, ['artist', 'plays']), 'plays');
+	  </pre>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var itunes = [{'artist' : 'Sun Ra', 'genre'  : 'Jazz', 'plays'  : 379}, {'artist' : 'Om', 'genre'  : 'Doom', 'plays'  : 22}, {'artist' : 'Can', 'genre'  : 'Prog', 'plays'  : 190}, {'artist' : 'Popol Vuh', 'genre'  : 'Prog', 'plays'  : 285}];
+          </pre>
+
+          <pre class="repl">
+	    _.sortBy(Codd.project(itunes, ['artist', 'plays']), 'plays');
+
+	    /***
+	     SELECT 'artist', 'plays' FROM itunes
+	      ORDER BY 'plays';
+	     ***/
+	  </pre>
+        </section>
+
+
+
+	<!-- THANKS -->
+        <section>
+          <img src="m/thanks.png"/>
+        </section>
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script type="text/javascript">
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: false,
+        progress: false,
+        history: true,
+        center: true,
+        mouseWheel: true,
+        rollingLinks: false,
+
+        theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'zoom', // default/cube/page/concave/zoom/linear/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/underscore.js', async: true, condition: function() { return true; } },
+          { src: 'lib/js/lemonad.js', async: true, condition: function() { return true; } },
+          { src: 'lib/js/codd.js', async: true, condition: function() { return true; } },
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/prettify/prettify.js', async: true, callback: function() {
+            var i, els = document.querySelectorAll("code"), l = els.length, el;
+            for (i = 0; i < l; i++) {
+              el = els[i];
+              if (el.className !== "no-highlight")
+                el.innerHTML = prettyPrintOne(el.innerHTML, el.className);
+            }
+          } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/catnip/catnip.js', async: true, condition: function() { return window.parent !== window; } },
+          { src: 'plugin/repl/ace/ace.js', async: true },
+          { src: 'plugin/repl/typescript.js', async: true },
+          { src: 'plugin/repl/repl.js', async: true }
+          // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>

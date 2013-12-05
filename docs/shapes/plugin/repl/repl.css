@@ -1,0 +1,61 @@
+pre.repl, div.live-repl {
+    font-family: 'Ubuntu Mono', 'Monaco', 'Menlo', 'Consolas', 'source-code-pro', monospace !important;
+    font-size: 18pt;
+    line-height: 28px;
+}
+
+pre.context {
+    display: none;
+}
+
+pre.repl {
+    width: 832px;
+    height: 600px;
+    border: 0;
+    background-color: inherit;
+    padding: 0 28px 0 28px;
+    left: 0;
+}
+
+pre.repl.active {
+    visibility: hidden;
+}
+
+div.live-repl {
+    top: 20px;
+    left: 24px;
+    width: 852px;
+    height: 600px;
+    text-align: left;
+}
+
+span.ace_comment {
+    color: #880000 !important;
+    font-weight: bold;
+}
+
+div.live-repl.flash-error .ace_text-layer {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+    background-color: #fcc;
+}
+
+div.live-repl.flash-success .ace_text-layer {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+    background-color: #cfc;
+}
+
+div.live-repl .ace_text-layer {
+    -webkit-transition: background-color 1s ease;
+    -moz-transition: background-color 1s ease;
+    -ms-transition: background-color 1s ease;
+    -o-transition: background-color 1s ease;
+    transition: background-color 1s ease;
+}
