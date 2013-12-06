@@ -196,7 +196,7 @@
   var _field = function(field, matcher) {
     var f = L.existy(matcher) ? matcher : function(rel, field) { return rel[field] };
     return function(rel) {
-      return f(rel, field);
+      return f(rel[field]);
     };
   };
 

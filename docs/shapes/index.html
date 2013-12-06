@@ -581,14 +581,82 @@
         </section>
 
         <section>
-	  <h2>L.pipeline</h2>
+	  <h2>composition and pipelines</h2>
         </section>
 
 
         <section>
-	  <h2>L.pipeline</h2>
+          <pre class="context">
+	    var itunes = [{'artist' : 'Sun Ra', 'genre'  : 'Jazz', 'plays'  : 379}, {'artist' : 'Om', 'genre'  : 'Doom', 'plays'  : 22}, {'artist' : 'Can', 'genre'  : 'Prog', 'plays'  : 190}, {'artist' : 'Popol Vuh', 'genre'  : 'Prog', 'plays'  : 285}];
+          </pre>
+
+          <pre class="repl">
+	    _.size(Codd.col(itunes, 'artist'));
+
+	  </pre>
         </section>
 
+        <section>
+          <img src="m/first-this.png"/>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var itunes = [{'artist' : 'Sun Ra', 'genre'  : 'Jazz', 'plays'  : 379}, {'artist' : 'Om', 'genre'  : 'Doom', 'plays'  : 22}, {'artist' : 'Can', 'genre'  : 'Prog', 'plays'  : 190}, {'artist' : 'Popol Vuh', 'genre'  : 'Prog', 'plays'  : 285}];
+          </pre>
+
+          <pre class="repl">
+	    _.compose(_.size, Codd.col)(itunes, 'artist');
+	  </pre>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var itunes = [{'artist' : 'Sun Ra', 'genre'  : 'Jazz', 'plays'  : 379}, {'artist' : 'Om', 'genre'  : 'Doom', 'plays'  : 22}, {'artist' : 'Can', 'genre'  : 'Prog', 'plays'  : 190}, {'artist' : 'Popol Vuh', 'genre'  : 'Prog', 'plays'  : 285}];
+          </pre>
+
+          <pre class="repl">
+	    _.compose(_.size, Codd.col)(itunes, 'artist');
+	              _.size( Codd.col( itunes, 'artist'));
+	  </pre>
+        </section>
+
+        <section>
+          <img src="m/stitch-shape.png"/>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var itunes = [{'artist' : 'Sun Ra', 'genre'  : 'Jazz', 'plays'  : 379}, {'artist' : 'Om', 'genre'  : 'Doom', 'plays'  : 22}, {'artist' : 'Can', 'genre'  : 'Prog', 'plays'  : 190}, {'artist' : 'Popol Vuh', 'genre'  : 'Prog', 'plays'  : 285}];
+          </pre>
+
+          <pre class="repl">
+	    L.pipeline(itunes, Codd.col('artist'), _.size);
+	  </pre>
+        </section>
+
+        <section>
+          <pre class="context">
+	    var itunes = [{'artist' : 'Sun Ra', 'genre'  : 'Jazz', 'plays'  : 379}, {'artist' : 'Om', 'genre'  : 'Doom', 'plays'  : 22}, {'artist' : 'Can', 'genre'  : 'Prog', 'plays'  : 190}, {'artist' : 'Popol Vuh', 'genre'  : 'Prog', 'plays'  : 285}];
+          </pre>
+
+          <pre class="repl">
+	    var orderBy = L.rcurry2(_.sortBy);
+
+	    L.pipeline(itunes,
+	               Codd.RQL.select(['artist', 'plays']),
+	               Codd.RQL.as({artist: 'band'}),
+	               Codd.RQL.where(Codd.RQL.field('plays', L.gt(200))),
+	               orderBy('plays'));
+
+	    /***
+	     SELECT artist AS "band", plays 
+	     FROM itunes
+	     WHERE plays > 200
+	     ORDER BY plays;
+	     ***/
+	  </pre>
+        </section>
 
 
 	<!-- THANKS -->
