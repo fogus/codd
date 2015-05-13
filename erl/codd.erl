@@ -1,7 +1,8 @@
 -module(codd).
--export([test/1]).
+-export([test/2]).
 -import(maps, [new/0]).
+-import(sets, [from_list/1]).
 
-test(Name) ->
-    io:format("Hello, ~s!~n", [Name]).
+test(Name1, Name2) ->
+    sets:from_list([#{"person" => Name1}, #{"person" => Name2}]).
 
