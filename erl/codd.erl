@@ -18,10 +18,14 @@ is_truthy(_) -> true.
 test(Name1, Name2) ->
     sets:from_list([#{"person" => Name1}, #{"person" => Name2}]).
 
-sk(Answer, Relation, Keys) ->
-    [Answer, Relation, Keys].
+sk_foldr(Answer, Relation, Keys) ->
+    Answer.
 
-select_keys(Ks) ->
-    fun(R) -> sk(#{}, R, Ks) end.
-
+select_keys(Keys) ->
+    fun(Relation) ->
+	    case is_truthy(Keys) of
+		true -> 42;
+		false -> 0
+	    end
+    end.
 
