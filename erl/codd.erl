@@ -1,6 +1,7 @@
 -module(codd).
 -export([test/2, is_truthy/1, select_keys/1]).
 -import(maps, [new/0]).
+-import(lists, [foldl/3]).
 -import(sets, [from_list/1]).
 
 % Courtesy of Steve Vinoski
@@ -18,14 +19,18 @@ is_truthy(_) -> true.
 test(Name1, Name2) ->
     sets:from_list([#{"person" => Name1}, #{"person" => Name2}]).
 
-sk_foldr(Answer, Relation, Keys) ->
-    Answer.
-
 select_keys(Keys) ->
     fun(Relation) ->
 	    case is_truthy(Keys) of
-		true -> 42;
-		false -> 0
+		true -> lists:foldl(fun(K, Acc) -> 
+					    case maps:find(K, Relation) of
+						{ok, V} -> maps:put(K, V, Acc);
+						_ -> Acc
+					    end
+				    end,
+				    #{}, 
+				    Keys);
+		false -> Relation
 	    end
     end.
 
