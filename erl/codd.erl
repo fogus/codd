@@ -1,5 +1,5 @@
 -module(codd).
--export([test/2, is_truthy/1]).
+-export([test/2, is_truthy/1, select_keys/1]).
 -import(maps, [new/0]).
 -import(sets, [from_list/1]).
 
@@ -17,4 +17,11 @@ is_truthy(_) -> true.
 
 test(Name1, Name2) ->
     sets:from_list([#{"person" => Name1}, #{"person" => Name2}]).
+
+sk(Answer, Relation, Keys) ->
+    [Answer, Relation, Keys].
+
+select_keys(Ks) ->
+    fun(R) -> sk(#{}, R, Ks) end.
+
 
