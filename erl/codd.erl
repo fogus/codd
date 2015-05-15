@@ -1,5 +1,5 @@
 -module(codd).
--export([test/2, is_truthy/1, select_keys/1]).
+-export([test/2, is_truthy/1, select_keys/1, project/2]).
 -import(maps, [new/0]).
 -import(lists, [foldl/3]).
 -import(sets, [from_list/1]).
@@ -20,6 +20,7 @@ test(Name1, Name2) ->
     sets:from_list([#{"person" => Name1}, #{"person" => Name2}]).
 
 select_keys([]) -> fun(V) -> V end;
+select_keys({}) -> fun(V) -> V end;
 select_keys(Keys) -> 
     fun(Relation) ->
 	    lists:foldl(fun(K, Acc) -> 
@@ -31,4 +32,8 @@ select_keys(Keys) ->
 			#{}, 
 			Keys)
     end.
+
+project(Table, Keys) ->
+    sets:from_list(lists:map(select_keys(Keys), sets:to_list(Table))).
+
 
