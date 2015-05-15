@@ -19,18 +19,16 @@ is_truthy(_) -> true.
 test(Name1, Name2) ->
     sets:from_list([#{"person" => Name1}, #{"person" => Name2}]).
 
-select_keys(Keys) ->
+select_keys([]) -> fun(V) -> V end;
+select_keys(Keys) -> 
     fun(Relation) ->
-	    case is_truthy(Keys) of
-		true -> lists:foldl(fun(K, Acc) -> 
-					    case maps:find(K, Relation) of
-						{ok, V} -> maps:put(K, V, Acc);
-						_ -> Acc
-					    end
-				    end,
-				    #{}, 
-				    Keys);
-		false -> Relation
-	    end
+	    lists:foldl(fun(K, Acc) -> 
+				case maps:find(K, Relation) of
+				    {ok, V} -> maps:put(K, V, Acc);
+				    _ -> Acc
+				end
+			end,
+			#{}, 
+			Keys)
     end.
 
