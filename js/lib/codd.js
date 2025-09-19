@@ -200,9 +200,9 @@
   Codd.cell = (table, col, row) => table[row][col];
 
   Codd.col = (table, tag) => {
-  if (!L.existy(tag)) return (t) => L.map(Codd.RQL.field(table), t);
+    if (!L.existy(tag)) return (t) => L.map(Codd.RQL.field(table), t);
 
-  return L.map(Codd.RQL.field(tag), table);
+    return L.map(Codd.RQL.field(tag), table);
   };
 
   Codd.row = L.rot(L.uncurry(L.nth));

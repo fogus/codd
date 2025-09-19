@@ -90,6 +90,41 @@ describe("Relational algebra functions - Boundary Conditions", () => {
       var s = L.$({a: 1, b: 2});
       expect(Codd.project(s, ['a', 'b'])).toEqual([{a: 1, b: 2}]);
     });
+
+        it('should return empty array for empty input', () => {
+      expect(Codd.project([], ['a'])).toEqual([]);
+    });
+
+    it('should return array of empty objects if keys not present', () => {
+      const input = [{b: 2}, {b: 4}];
+      expect(Codd.project(input, ['a'])).toEqual([{}, {}]);
+    });
+
+    it('should return original objects if all keys are projected', () => {
+      const input = [{a: 1, b: 2}];
+      expect(Codd.project(input, ['a', 'b'])).toEqual([{a: 1, b: 2}]);
+    });
+
+    it('should project only specified keys', () => {
+      const input = [{a: 1, b: 2, c: 3}, {a: 4, b: 5, c: 6}];
+      expect(Codd.project(input, ['a', 'c'])).toEqual([{a: 1, c: 3}, {a: 4, c: 6}]);
+    });
+
+    it('should handle mixed presence of keys', () => {
+      const input = [{a: 1, b: 2}, {b: 3, c: 4}];
+      expect(Codd.project(input, ['a', 'b'])).toEqual([{a: 1, b: 2}, {b: 3}]);
+    });
+
+    it('should return array of empty objects if projected keys are missing in all objects', () => {
+      const input = [{x: 1}, {y: 2}];
+      expect(Codd.project(input, ['z'])).toEqual([{}, {}]);
+    });
+
+    it('should not mutate the original objects', () => {
+      const input = [{a: 1, b: 2}];
+      Codd.project(input, ['a']);
+      expect(input).toEqual([{a: 1, b: 2}]);
+    });
   });
 
   describe("Codd.rename", () => {
@@ -151,5 +186,36 @@ describe("Relational algebra functions - Boundary Conditions", () => {
       expect(index[1].length).toBe(3);
       expect(folk).toEqual([{name: 'Donovan', genre: 'folk'}]);
     });
+  });
+
+  describe("Codd.naturalJoin", () => {
+    it("should join two relations on common keys", () => {
+      const r1 = [
+        {id: 1, name: 'Alice'},
+        {id: 2, name: 'Bob'}
+      ];
+      const r2 = [
+        {id: 1, age: 30},
+        {id: 2, age: 40},
+        {id: 3, age: 50}
+      ];
+      const result = Codd.naturalJoin(r1, r2);
+      expect(result).toEqual([
+        {id: 2, name: 'Bob', age: 40},
+        {id: 1, name: 'Alice', age: 30}
+      ]);
+    });
+/*
+    it("should return empty array if no common keys", () => {
+      const r1 = [{a: 1}];
+      const r2 = [{b: 2}];
+      expect(Codd.naturalJoin(r1, r2)).toEqual([]);
+    });
+
+    it("should handle empty input arrays", () => {
+      expect(Codd.naturalJoin([], [{id: 1}])).toEqual([]);
+      expect(Codd.naturalJoin([{id: 1}], [])).toEqual([]);
+    });
+*/
   });
 });
