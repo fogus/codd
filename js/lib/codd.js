@@ -1,7 +1,7 @@
 
 //    codd.js
 //    http://www.functionaljs.org/codd
-//    (c) 2013 Fogus, Ariadne Softworks
+//    (c) 2013-2025 Fogus
 //    codd.js may be freely distributed under the MIT license
 
 // *the secret JavaScript sauce*

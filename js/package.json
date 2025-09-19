@@ -22,6 +22,17 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/fogus/codd.git"
+  },
+  "scripts": {
+    "test": "jest"
+  }
+  ,
+  "devDependencies": {
+    "jest": "^29.0.0"
+  },
+  "jest": {
+    "testMatch": ["**/test/**/*.js"]
+  ,"testPathIgnorePatterns": ["<rootDir>/test/lib/"]
   }
 }
 

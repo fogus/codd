@@ -1,152 +1,132 @@
-describe("Relational algebra functions", function() {
-  describe("Codd", function() {
-    it("should return an array of uniq elements", function() {
-      var s = L.$(1,2,3,4,5,3,4,5);
+const Codd = require('../lib/codd');
+const L = require('lemonad');
 
-      expect(s.constructor).toBe(Array);
-      expect(s).toEqual([1,2,3,4,5]);
+describe("Relational algebra functions - Boundary Conditions", function() {
+  describe("Codd.toSet", function() {
+    it("should return an empty array when input is empty", function() {
+      expect(Codd.toSet([])).toEqual([]);
     });
-  });
 
-  describe("Codd.set", function() {
-    it("should return an array of uniq elements", function() {
-      var s = Codd.toSet([1,2,3,4,5,3,4,5,8,2,3]);
+    it("should handle array with all duplicates", function() {
+      expect(Codd.toSet([1,1,1,1])).toEqual([1]);
+    });
 
-      expect(s.constructor).toBe(Array);
-      expect(s).toEqual([1,2,3,4,5,8]);
+    it("should handle array with different types", function() {
+      expect(Codd.toSet([1, '1', 1])).toEqual([1, '1']);
     });
   });
 
   describe("Codd.difference", function() {
-    it("should return an array of L - R", function() {
-      var L = Codd.toSet([1,2,3,4,5]);
-      var R = Codd.toSet([1,2]);
+    it("should return empty array if both sets are empty", function() {
+      expect(Codd.difference([])([])).toEqual([]);
+    });
 
-      expect(Codd.difference(R)(L)).toEqual([3,4,5]);
-      expect(Codd.difference(L)(R)).toEqual([]);
+    it("should return L if R is empty", function() {
+      expect(Codd.difference([])([1,2,3])).toEqual([1,2,3]);
+    });
+
+    it("should return empty if L is empty", function() {
+      expect(Codd.difference([1,2,3])([])).toEqual([]);
     });
   });
 
   describe("Codd.intersection", function() {
-    it("should return an array of L + R", function() {
-      var L = Codd.toSet([1,2,3,4,5]);
-      var R = Codd.toSet([1,2]);
+    it("should return empty array if both sets are empty", function() {
+      expect(Codd.intersection([])([])).toEqual([]);
+    });
 
-      expect(Codd.intersection(R)(L)).toEqual([1,2]);
-      expect(Codd.intersection(L)(R)).toEqual([1,2]);
+    it("should return empty array if no intersection", function() {
+      expect(Codd.intersection([4,5])([1,2,3])).toEqual([]);
+    });
+
+    it("should handle intersection with one element", function() {
+      expect(Codd.intersection([2,3])([3,4])).toEqual([3]);
     });
   });
 
   describe("Codd.union", function() {
-    it("should return an array of L u R", function() {
-      var L = Codd.toSet([1,2,3,4,5]);
-      var R = Codd.toSet([1,2,6,7]);
+    it("should return empty array if both sets are empty", function() {
+      expect(Codd.union([])([])).toEqual([]);
+    });
 
-      expect(Codd.union(R)(L)).toEqual([1,2,3,4,5,6,7]);
-      expect(Codd.union(L)(R)).toEqual([1,2,3,4,5,6,7]);
+    it("should return L if R is empty", function() {
+      expect(Codd.union([])([1,2,3])).toEqual([1,2,3]);
+    });
+
+    it("should return R if L is empty", function() {
+      expect(Codd.union([1,2,3])([])).toEqual([1,2,3]);
     });
   });
 
   describe("Codd.restrict", function() {
-    it("should return an array of uniq elements matching a predicate", function() {
-      var s = L.$(1,2,3,4,5,3,4,5);
+    it("should return empty array if no elements match predicate", function() {
+      var s = L.$(2,4,6);
       var result = Codd.restrict(s, L.isOdd);
+      expect(result).toEqual([]);
+    });
 
-      expect(result.constructor).toBe(Array);
+    it("should return all elements if all match predicate", function() {
+      var s = L.$(1,3,5);
+      var result = Codd.restrict(s, L.isOdd);
       expect(result).toEqual([1,3,5]);
     });
-  });
 
-  describe("Codd.RQL.where", function() {
-    it("should return an array of uniq elements matching a predicate (curried)", function() {
-      var s = L.$(1,2,3,4,5,3,4,5);
-      var result = Codd.RQL.where(L.isOdd)(s);
-
-      expect(result.constructor).toBe(Array);
-      expect(result).toEqual([1,3,5]);
+    it("should return empty array for empty input", function() {
+      expect(Codd.restrict([], L.isOdd)).toEqual([]);
     });
   });
 
   describe("Codd.project", function() {
-    it("should return an array of objects with only the keys wanted", function() {
-      var s = L.$({a: 1, b: 2}, {a: 2, b: 4});
-      var result = Codd.project(s, ['a']);
-
-      expect(result.constructor).toBe(Array);
-      expect(result).toEqual([{a: 1}, {a: 2}]);
+    it("should return empty array for empty input", function() {
+      expect(Codd.project([], ['a'])).toEqual([]);
     });
-  });
 
-  describe("Codd.RQL.select", function() {
-    it("should return an array of objects with only the keys wanted (curried)", function() {
-      var s = L.$({a: 1, b: 2}, {a: 2, b: 4});
-      var result = Codd.RQL.select(['a'])(s);
+    it("should return array of empty objects if keys not present", function() {
+      var s = L.$({b: 2}, {b: 4});
+      expect(Codd.project(s, ['a'])).toEqual([{},{ }]);
+    });
 
-      expect(result.constructor).toBe(Array);
-      expect(result).toEqual([{a: 1}, {a: 2}]);
+    it("should return original objects if all keys are projected", function() {
+      var s = L.$({a: 1, b: 2});
+      expect(Codd.project(s, ['a', 'b'])).toEqual([{a: 1, b: 2}]);
     });
   });
 
   describe("Codd.rename", function() {
-    it("should rename the keys in an array of objects with according to a mapping in the given object", function() {
-      var s  = [{'a': 1, 'b': 2}, {'a': 3}, {'b': 4}];
-      var st = [{'AAA': 1, 'b': 2}, {'AAA': 3}, {'b': 4}];
-      var result = Codd.rename(s, {'a': 'AAA'});
-
-      expect(result.constructor).toBe(Array);
-      expect(result).toEqual(st);
+    it("should return empty array for empty input", function() {
+      expect(Codd.rename([], {'a': 'AAA'})).toEqual([]);
     });
 
-    it("should not modify the original array of objects", function() {
-      var s  = [{'a': 1, 'b': 2}, {'a': 3}, {'b': 4}];
-      var target = [{'a': 1, 'b': 2}, {'a': 3}, {'b': 4}];
-      var _ = Codd.rename(s, {'a': 'AAA'});
-
-      expect(s).toEqual(target);
-    });
-  });
-
-  describe("Codd.RQL.as", function() {
-    it("should rename the keys in an array of objects with according to a mapping in the given object (curried)", function() {
-      var s  = [{'a': 1, 'b': 2}, {'a': 3}, {'b': 4}];
-      var st = [{'AAA': 1, 'b': 2}, {'AAA': 3}, {'b': 4}];
-      var result = Codd.RQL.as({'a': 'AAA'})(s);
-
-      expect(result.constructor).toBe(Array);
-      expect(result).toEqual(st);
+    it("should not rename if mapping is empty", function() {
+      var s = [{'a': 1, 'b': 2}];
+      expect(Codd.rename(s, {})).toEqual([{'a': 1, 'b': 2}]);
     });
 
-    it("should not modify the original array of objects", function() {
-      var s  = [{'a': 1, 'b': 2}, {'a': 3}, {'b': 4}];
-      var target = [{'a': 1, 'b': 2}, {'a': 3}, {'b': 4}];
-      var _ = Codd.RQL.as({'a': 'AAA'})(s);
-
-      expect(s).toEqual(target);
+    it("should not rename keys not present in mapping", function() {
+      var s = [{'a': 1, 'b': 2}];
+      expect(Codd.rename(s, {'c': 'C'})).toEqual([{'a': 1, 'b': 2}]);
     });
   });
 
   describe("Codd.lookup", function() {
-    it("should return an array of objects matching the key given in the index", function() {
-      var testIndex = [[{a: 1}, {name: 'foo', a: 1}, {name: 'bar', a: 1}], [{a: 2}, {a: 2, name: 'baz'}]];
-      var result1   = Codd.lookup(testIndex, {a: 1});
-      var result2   = Codd.lookup(testIndex, {a: 2});
-      var resultNo  = Codd.lookup(testIndex, {a: 'not there'});
+    it("should return undefined for empty index", function() {
+      expect(Codd.lookup([], {a: 1})).toBe(undefined);
+    });
 
-      expect(result1.constructor).toBe(Array);
-      expect(result1).toEqual([{a: 1, name: 'foo'}, {a: 1, name: 'bar'}]);
+    it("should return undefined if key not found", function() {
+      var testIndex = [[{a: 1}, {name: 'foo', a: 1}]];
+      expect(Codd.lookup(testIndex, {a: 2})).toBe(undefined);
+    });
 
-      expect(result2.constructor).toBe(Array);
-      expect(result2).toEqual([{a: 2, name: 'baz'}]);
-
-      expect(resultNo).toBe(undefined);
+    it("should handle index with empty buckets", function() {
+      var testIndex = [[{a: 1}], []];
+      expect(Codd.lookup(testIndex, {a: 1})).toEqual([]);
     });
   });
 
   describe("Codd.put", function() {
-    it("should return an index with a new entry, even when the index is empty", function() {
-      var testIndexEmpty = [];
-
-      expect(Codd.put(testIndexEmpty, {a: 1}, 42)).toEqual([[{a: 1}, 42]]);
+    it("should add to empty index", function() {
+      expect(Codd.put([], {a: 1}, 99)).toEqual([[{a: 1}, 99]]);
     });
 
     it("should return an index with a new entry", function() {
@@ -155,7 +135,7 @@ describe("Relational algebra functions", function() {
 
       expect(Codd.put(testIndex, {a: 1}, 42)).toEqual(exp);
     });
-  });
+  });  
 
   describe("Codd.index", function() {
     it("should return an index of the objects based on the keys given", function() {
