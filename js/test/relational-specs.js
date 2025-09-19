@@ -220,18 +220,15 @@ describe("Relational algebra functions - Boundary Conditions", () => {
   });
   
   describe('Codd.RQL with Codd.tunes', () => {
-    beforeAll(() => {
-      // Example tunes data
-      Codd.tunes = [
+    tunes = [
         {artist: 'Burial', title: 'Archangel', genre: 'dubstep', year: 2007},
         {artist: 'Donovan', title: 'Sunshine Superman', genre: 'folk', year: 1966},
         {artist: 'Ikonika', title: 'Idiot', genre: 'dubstep', year: 2010},
         {artist: 'The Beatles', title: 'Hey Jude', genre: 'rock', year: 1968}
       ];
-    });
 
     it('should select all dubstep tunes', () => {
-      const rql = Codd.RQL.q(Codd.RQL.where(Codd.RQL.field('genre', Codd.RQL.like('dubstep'))))(Codd.tunes);
+      const rql = Codd.RQL.q(Codd.RQL.where(Codd.RQL.field('genre', Codd.RQL.like('dubstep'))))(tunes);
       expect(rql).toEqual([
         {artist: 'Burial', title: 'Archangel', genre: 'dubstep', year: 2007},
         {artist: 'Ikonika', title: 'Idiot', genre: 'dubstep', year: 2010}
@@ -239,14 +236,14 @@ describe("Relational algebra functions - Boundary Conditions", () => {
     });
 
     it('should select artist and title for folk tunes', () => {
-      const rql = Codd.RQL.q(Codd.RQL.where(Codd.RQL.field('genre', Codd.RQL.like('folk'))))(Codd.tunes);
+      const rql = Codd.RQL.q(Codd.RQL.where(Codd.RQL.field('genre', Codd.RQL.like('folk'))))(tunes);
       expect(rql).toEqual([
         {artist: 'Donovan', title: 'Sunshine Superman', genre: 'folk', year: 1966}
       ]);
     });
 
     it('should select all tunes from 1960s', () => {
-      const rql = Codd.RQL.q(Codd.RQL.where(rel => rel.year >= 1960 && rel.year < 1970))(Codd.tunes);
+      const rql = Codd.RQL.q(Codd.RQL.where(rel => rel.year >= 1960 && rel.year < 1970))(tunes);
       expect(rql).toEqual([
         {artist: 'Donovan', title: 'Sunshine Superman', genre: 'folk', year: 1966},
         {artist: 'The Beatles', title: 'Hey Jude', genre: 'rock', year: 1968}
@@ -254,7 +251,7 @@ describe("Relational algebra functions - Boundary Conditions", () => {
     });
 
     it('should select all artists', () => {
-      const rql = Codd.RQL.q(Codd.RQL.where(Codd.RQL.field('artist', Codd.RQL.like(/.*/))))(Codd.tunes);
+      const rql = Codd.RQL.q(Codd.RQL.where(Codd.RQL.field('artist', Codd.RQL.like(/.*/))))(tunes);
       expect(rql).toEqual([
         {artist: 'Burial', title: 'Archangel', genre: 'dubstep', year: 2007},
         {artist: 'Donovan', title: 'Sunshine Superman', genre: 'folk', year: 1966},
@@ -264,7 +261,7 @@ describe("Relational algebra functions - Boundary Conditions", () => {
     });
 
     it('should rename genre to style', () => {
-      const rql = Codd.RQL.q(Codd.RQL.as({'genre': 'style'}))(Codd.tunes);
+      const rql = Codd.RQL.q(Codd.RQL.as({'genre': 'style'}))(tunes);
       expect(rql).toEqual([
         {artist: 'Burial', title: 'Archangel', style: 'dubstep', year: 2007},
         {artist: 'Donovan', title: 'Sunshine Superman', style: 'folk', year: 1966},
@@ -275,7 +272,7 @@ describe("Relational algebra functions - Boundary Conditions", () => {
     
     it('should chain multiple RQL operations', () => {
       let rql = Codd.RQL.q(
-        Codd.tunes,
+        tunes,
         Codd.RQL.where(Codd.RQL.field('genre', Codd.RQL.like('dubstep'))),
         Codd.RQL.select(['artist', 'title']),
         Codd.RQL.as({'title': 'songTitle'})
