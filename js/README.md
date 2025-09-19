@@ -3,15 +3,37 @@ Codd
 
 A functional programming library built on [Lemonad](http://www.functionaljs.org) to provide relational algebra operations in JavaScript.
 
-## Using
+## Use
 
 Add the following to your 'package.json' file in the `"dependencies"` section:
 
     "codd": "0.8.3"
 
-## Currently available functions:
+### Node (require)
+
+Install the package and its dependency:
+
+```bash
+npm install codd lemonad
+```
+
+Then in Node:
 
 ```javascript
+const L = require('lemonad');
+const Codd = require('codd'); // or './lib/codd' locally
+```
+
+### Browser
+
+```html
+<script src="/path/to/lemonad.js"></script>
+<script src="/path/to/codd.js"></script>
+```
+
+## Currently available functions:
+
+```
 [ 'Codd.difference',
   'Codd.index',
   'Codd.intersection',
@@ -34,12 +56,59 @@ Add the following to your 'package.json' file in the `"dependencies"` section:
   'Codd.RQL.where' ]
 ```
 
-Dev & Testing
--------------
+Examples
+--------
 
-Run the following:
+```javacsript
+// simple RQL example
+const table1 = [{a: 1, b: 2}, {a: 2, b: 4}];
 
-    npm test
+// project/select (returns array of objects with only the given keys)
+Codd.RQL.select(['a'])(table1);
+// -> [{ a: 1 }, { a: 2 }]
+
+// where/restrict (filters rows via a predicate)
+Codd.RQL.where(L.isOdd)([1,2,3,4,5]);
+// -> [1, 3, 5]
+
+// as
+Codd.RQL.as({'a':'AAA'})(table1);
+// -> [ { b: 2, AAA: 1 }, { b: 4, AAA: 2 } ]
+
+// natural join example
+const people = [
+    {id: 1, name: 'Alice', deptId: 10},
+    {id: 2, name: 'Bob',   deptId: 20},
+    {id: 3, name: 'Carol', deptId: 10}
+];
+
+const depts = [{deptId: 10, dept: 'Engineering'}, {deptId: 20, dept: 'Sales'}];
+
+Codd.naturalJoin(people, depts)
+// -> [{ deptId: 10, dept: 'Engineering', id: 3, name: 'Carol' },
+//     { deptId: 20, dept: 'Sales', id: 2, name: 'Bob' },
+//     { deptId: 10, dept: 'Engineering', id: 3, name: 'Carol' }]
+
+
+// Composed example
+const TUNES_DB = [
+  {artist: 'Burial', title: 'Archangel', genre: 'dubstep', year: 2007},
+  {artist: 'Donovan', title: 'Sunshine Superman', genre: 'folk', year: 1966},
+  {artist: 'Ikonika', title: 'Idiot', genre: 'dubstep', year: 2010},
+  {artist: 'The Beatles', title: 'Hey Jude', genre: 'rock', year: 1968}
+];
+
+Codd.RQL.q(
+  TUNES_DB,
+  Codd.RQL.where(Codd.RQL.field('genre', Codd.RQL.like('dubstep'))),
+  Codd.RQL.select(['artist', 'title']),
+  Codd.RQL.as({'title': 'songTitle'})
+);
+
+// -> [{artist: 'Burial', songTitle: 'Archangel'},
+//     {artist: 'Ikonika', songTitle: 'Idiot'}]
+```
+
 
 Influences / References
 -----------------------
