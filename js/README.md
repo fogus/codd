@@ -34,6 +34,13 @@ Add the following to your 'package.json' file in the `"dependencies"` section:
   'Codd.RQL.where' ]
 ```
 
+Dev & Testing
+-------------
+
+Run the following:
+
+    npm test
+
 Influences / References
 -----------------------
 

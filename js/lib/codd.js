@@ -8,19 +8,19 @@
 (function() {
   // Imports
   // -------
-  var L = this.L || require('lemonad');
+  const L = this.L || require('lemonad');
 
   // The base Codd object
-  var Codd = function(array) {
+  const Codd = function(array) {
     // TODO: Implement more efficiently
-    var set = {};
-    var results = [];
+    const set = {};
+    const results = [];
 
-    for (index in array) {
+    for (const index in array) {
       set[JSON.stringify(array[index])] = array[index];
     }
 
-    for(key in set) {
+    for (const key in set) {
       results.push(set[key]);
     }
 
@@ -42,31 +42,21 @@
 
   // TODO: Reimplement more efficiently
   Codd.intersection = function(lhs) {
-    return function(rhs) {
-      return L.filter(function(elem) {
-        return rhs.indexOf(elem) != -1;
-      }, lhs);
-    };
+    return (rhs) => L.filter(elem => rhs.indexOf(elem) != -1, lhs);
   };
 
   // TODO: Reimplement more efficiently
   Codd.union = function(lhs) {
-    return function(rhs) {
-      return L.uniq(L.cat(lhs, rhs));
-    };
+    return (rhs) => L.uniq(L.cat(lhs, rhs));
   };
 
   // TODO: Reimplement more efficiently
   Codd.difference = function(minus) {
-    return function(target) {
-      return L.filter(function(value){ 
-        return !L.existy(L.has(L.eq(value))(minus)); 
-      }, target);
-    };
+    return (target) => L.filter(value => !L.existy(L.has(L.eq(value))(minus)), target);
   };
 
   Codd.restrict = function(xset, pred) {
-    return L.reduce(function(result, val) {
+    return L.reduce((result, val) => {
       if (L.truthy(pred(val)))
         return result;
       else
@@ -74,43 +64,37 @@
     }, xset, xset);
   };
 
-  Codd.selectKeys = function(keys) {
-    return function(rel) {
-      var copy = {};
+  Codd.selectKeys = (keys) => (rel) => {
+      const copy = {};
 
-      for(var key in keys) {
+      for (const key in keys) {
         if (keys[key] in rel) copy[keys[key]] = rel[keys[key]];
       };
 
       return copy;
     };
-  };
 
-  Codd.project = function(table, ks) {
-    return L.map(function(key) {
-      var rel = table[key];
+  Codd.project = (table, ks) => L.map(key => {
+      const rel = table[key];
       return Codd.selectKeys(ks)(rel);
     }, Codd.keys(table));
-  };
 
-  Codd.omitKeys = function(minus) {
-    return function(rel) {
-      var copy = {};
-      var value;
+  Codd.omitKeys = (minus) => (rel) => {
+      const copy = {};
+      let value;
 
-      for (var key in rel) {
+      for (const key in rel) {
         if (!L.existy(L.has(L.eq(key))(minus)))
           copy[key] = rel[key];
       }
 
       return copy;
-    };  
-  };
+    };
 
-  Codd.renameKeys = function(obj, kobj) {
-    var seed = Codd.omitKeys(Codd.keys(kobj))(obj);
+  Codd.renameKeys = (obj, kobj) => {
+    const seed = Codd.omitKeys(Codd.keys(kobj))(obj);
 
-    return L.reduce(function(o, key) {
+    return L.reduce((o, key) => {
       if (L.existy(obj[key])) o[kobj[key]] = obj[key];
 
       return o;
@@ -119,15 +103,13 @@
     Codd.keys(kobj));
   };
 
-  Codd.rename = function(table, mappings) {
-    return L.map(L.rcurry2(Codd.renameKeys)(mappings), table);
-  };
+  Codd.rename = (table, mappings) => L.map(L.rcurry2(Codd.renameKeys)(mappings), table);
 
-  Codd.lookup = function(index, obj, alt) {
-    var answer = alt;
+  Codd.lookup = (index, obj, alt) => {
+    let answer = alt;
 
-    L.has(function(entry) {
-      var key = L.first(entry);
+    L.has(entry => {
+      const key = L.first(entry);
 
       if (L.eq(key)(obj)) {
         answer = L.tail(entry);
@@ -140,9 +122,9 @@
     return answer;
   };
 
-  Codd.put = function(index, key, element) {
-    var found = false;
-    var result = L.map(function(entry) {
+  Codd.put = (index, key, element) => {
+    let found = false;
+    const result = L.map(entry => {
       if (L.eq(L.first(entry))(key)) {
         found = true;
         return L.cat([key, element], L.tail(entry));
@@ -154,50 +136,42 @@
     return found ? result : L.cons([key, element], result);
   };
 
-  Codd.index = function(table, ks) {
-    return L.reduce(function(index, rel) {
-      var ik = Codd.selectKeys(ks)(rel);
-      var iv = Codd.lookup(index, ik, Codd());
+  Codd.index = (table, ks) => L.reduce((index, rel) => {
+      const ik = Codd.selectKeys(ks)(rel);
+      const iv = Codd.lookup(index, ik, Codd());
 
       return Codd.put(index, ik, rel);
     }, [], table);
-  };
 
-  Codd.naturalJoin = function(table1, table2) {
-    var xks = Codd.keys(L.first(table1));
-    var yks = Codd.keys(L.first(table2));
-    var ks  = Codd.intersection(xks)(yks);
+  Codd.naturalJoin = (table1, table2) => {
+    const xks = Codd.keys(L.first(table1));
+    const yks = Codd.keys(L.first(table2));
+    const ks  = Codd.intersection(xks)(yks);
 
-    var sz = (L.len(table1) <= L.len(table2)) ? [table1, table2] : [table2, table1];
-    var r  = sz[0];
-    var s  = sz[1];
+    const sz = (L.len(table1) <= L.len(table2)) ? [table1, table2] : [table2, table1];
+    const r  = sz[0];
+    const s  = sz[1];
 
-    var idx = Codd.index(r, ks);
+    const idx = Codd.index(r, ks);
 
-    return L.reduce(function(result, o){
-      var found = Codd.lookup(idx, Codd.selectKeys(ks)(o));
+    return L.reduce((result, o) => {
+      const found = Codd.lookup(idx, Codd.selectKeys(ks)(o));
 
       if (L.existy(found))
-        return L.reduce(function(agg, rel){
-          return L.cons(L.merge(rel, o), agg);
-        }, result, found);
+        return L.reduce((agg, rel) => L.cons(L.merge(rel, o), agg), result, found);
       else
         return result;
     }, [], s);
   };
 
-  var _like = function(r) {
-    return function(rel, field) {
-      var regex = (r instanceof RegExp) ? r : new RegExp(r);
+  const _like = (r) => (rel, field) => {
+      const regex = (r instanceof RegExp) ? r : new RegExp(r);
       return !! rel[field].match(regex)
     };
-  };
 
-  var _field = function(field, matcher) {
-    var f = L.existy(matcher) ? matcher : function(rel, field) { return rel[field] };
-    return function(rel) {
-      return f(rel, field);
-    };
+  const _field = (field, matcher) => {
+  const f = L.existy(matcher) ? matcher : ((rel, field) => rel[field]);
+  return (rel) => f(rel, field);
   };
 
   Codd.RQL = {
@@ -228,14 +202,12 @@
                 {band: "Dead Can Dance",        plays: 36,  genre: "Darkwave"},
                 {band: "Dave Brubeck",          plays: 36,  genre: "Jazz"}];
 
-  Codd.cell = function(table, col, row){ 
-    return table[row][col];
-  };
+  Codd.cell = (table, col, row) => table[row][col];
 
-  Codd.col = function(table, tag) {
-    if (!L.existy(tag)) return function(t) { return L.map(Codd.RQL.field(table), t); };
+  Codd.col = (table, tag) => {
+  if (!L.existy(tag)) return (t) => L.map(Codd.RQL.field(table), t);
 
-    return L.map(Codd.RQL.field(tag), table);
+  return L.map(Codd.RQL.field(tag), table);
   };
 
   Codd.row = L.rot(L.uncurry(L.nth));
@@ -243,7 +215,7 @@
   // Exports
   // -------
 
-  var root = this;
+  const root = this;
 
   if (typeof exports !== 'undefined') {
     if (typeof module !== 'undefined' && module.exports) {
