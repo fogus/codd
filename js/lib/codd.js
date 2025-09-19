@@ -137,7 +137,6 @@
 
   Codd.index = (table, ks) => L.reduce((index, rel) => {
       const ik = Codd.selectKeys(ks)(rel);
-      const iv = Codd.lookup(index, ik, Codd());
 
       return Codd.put(index, ik, rel);
     }, [], table);
@@ -177,25 +176,6 @@
     field:   _field,
     q:       L.pipeline
   };
-
-  Codd.tunes = [{band: "Blind Lemon Jefferson", plays: 141, genre: "Delta Blues"},
-                {band: "Erroll Garner",         plays: 115, genre: "Jazz Piano"},
-                {band: "Brian Eno",             plays: 94,  genre: "Electronic"},
-                {band: "Charlie Parker",        plays: 75,  genre: "Bebop Jazz"},
-                {band: "Alice Coltrane",        plays: 73,  genre: "Free Jazz"},
-                {band: "Tim Hecker",            plays: 70,  genre: "Ambient"},
-                {band: "Charles Mingus",        plays: 69,  genre: "Bebop Jazz"},
-                {band: "Bjork",                 plays: 57,  genre: "Electronic"},
-                {band: "Boards of Canada",      plays: 57,  genre: "Electronic"},
-                {band: "Billy Holliday",        plays: 46,  genre: "Jazz"},
-                {band: "Black Ace",             plays: 45,  genre: "Texas Blues"},
-                {band: "James Brown",           plays: 44,  genre: "Soul"},
-                {band: "Sunny Day in Glasgow",  plays: 41,  genre: "Shoegaze"},
-                {band: "Tangerine Dream",       plays: 40,  genre: "Electronic"},
-                {band: "Tool",                  plays: 39,  genre: "Metal"},
-                {band: "Scientist",             plays: 37,  genre: "Dub"},
-                {band: "Dead Can Dance",        plays: 36,  genre: "Darkwave"},
-                {band: "Dave Brubeck",          plays: 36,  genre: "Jazz"}];
 
   Codd.cell = (table, col, row) => table[row][col];
 
