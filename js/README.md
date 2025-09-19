@@ -59,7 +59,7 @@ const Codd = require('codd'); // or './lib/codd' locally
 Examples
 --------
 
-```javacsript
+```javascript
 // simple RQL example
 const table1 = [{a: 1, b: 2}, {a: 2, b: 4}];
 
