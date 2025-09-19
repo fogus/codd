@@ -274,9 +274,12 @@ describe("Relational algebra functions - Boundary Conditions", () => {
     });
     
     it('should chain multiple RQL operations', () => {
-      let rql = Codd.RQL.q(Codd.RQL.where(Codd.RQL.field('genre', Codd.RQL.like('dubstep'))))(Codd.tunes);
-      rql = Codd.RQL.q(Codd.RQL.select(['artist', 'title']))(rql);
-      rql = Codd.RQL.q(Codd.RQL.as({'title': 'songTitle'}))(rql);
+      let rql = Codd.RQL.q(
+        Codd.tunes,
+        Codd.RQL.where(Codd.RQL.field('genre', Codd.RQL.like('dubstep'))),
+        Codd.RQL.select(['artist', 'title']),
+        Codd.RQL.as({'title': 'songTitle'})
+      );
       
       expect(rql).toEqual([
         {artist: 'Burial', songTitle: 'Archangel'},
