@@ -81,7 +81,6 @@
 
   Codd.omitKeys = (minus) => (rel) => {
       const copy = {};
-      let value;
 
       for (const key in rel) {
         if (!L.existy(L.has(L.eq(key))(minus)))
@@ -147,11 +146,7 @@
     const xks = Codd.keys(L.first(table1));
     const yks = Codd.keys(L.first(table2));
     const ks  = Codd.intersection(xks)(yks);
-
-    const sz = (L.len(table1) <= L.len(table2)) ? [table1, table2] : [table2, table1];
-    const r  = sz[0];
-    const s  = sz[1];
-
+    const [r, s] = (L.len(table1) <= L.len(table2)) ? [table1, table2] : [table2, table1];
     const idx = Codd.index(r, ks);
 
     return L.reduce((result, o) => {

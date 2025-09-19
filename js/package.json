@@ -24,15 +24,21 @@
     "url": "https://github.com/fogus/codd.git"
   },
   "scripts": {
-    "test": "jest"
-  }
-  ,
+    "test": "jest",
+    "lint": "eslint \"lib/**/*.js\" \"test/**/*.js\"",
+    "lint:fix": "eslint --fix \"lib/**/*.js\" \"test/**/*.js\""
+  },
   "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "eslint": "^9.36.0",
     "jest": "^29.0.0"
   },
   "jest": {
-    "testMatch": ["**/test/**/*.js"]
-  ,"testPathIgnorePatterns": ["<rootDir>/test/lib/"]
+    "testMatch": [
+      "**/test/**/*.js"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/test/lib/"
+    ]
   }
 }
-
