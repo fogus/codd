@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Codd Query Runner</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin: 20px; }
+    .row { display: flex; gap: 16px; align-items: flex-start; }
+    .pane { flex: 1; display: flex; flex-direction: column; }
+    label { font-weight: 600; margin-bottom: 6px; }
+    textarea { width: 100%; height: 320px; font-family: Menlo, Monaco, monospace; font-size: 13px; padding: 8px; box-sizing: border-box; }
+    .controls { margin-top: 8px; }
+    button { padding: 8px 12px; font-size: 13px; }
+    #results { height: 260px; }
+  </style>
+</head>
+<body>
+  <h1>Codd — DB & Query Runner</h1>
+
+  <div style="margin-bottom:12px; display:flex; gap:8px; align-items:center;">
+    <label for="examples" style="margin:0; font-weight:600;">Examples</label>
+    <select id="examples">
+      <option value="">-- select example --</option>
+      <option value="simple">Simple RQL example</option>
+      <option value="natural">Natural join example</option>
+      <option value="composed">Composed example</option>
+    </select>
+    <button id="loadExample">Load Example</button>
+  </div>
+
+  <div class="row">
+    <div class="pane">
+      <label for="db">Database (JS)</label>
+      <textarea id="db">[
+  {"artist": "Burial", "title": "Archangel", "genre": "dubstep", "year": 2007},
+  {"artist": "Donovan", "title": "Sunshine Superman", "genre": "folk", "year": 1966},
+  {"artist": "Ikonika", "title": "Idiot", "genre": "dubstep", "year": 2010},
+  {"artist": "The Beatles", "title": "Hey Jude", "genre": "rock", "year": 1968}
+]</textarea>
+      <div class="controls"><button id="loadData">Load Data</button></div>
+    </div>
+
+    <div class="pane">
+      <label for="query">Query (JS)</label>
+      <textarea id="query">Codd.RQL.q(
+  CODD_DB,
+  Codd.RQL.where(Codd.RQL.field('genre', Codd.RQL.like('dubstep'))),
+  Codd.RQL.select(['artist', 'title']),
+  Codd.RQL.as({'title': 'songTitle'})
+);</textarea>
+      <div class="controls"><button id="runQuery">Run Query</button></div>
+    </div>
+  </div>
+
+  <div style="margin-top:18px;">
+    <label for="results">Results (JSON)</label>
+    <textarea id="results" readonly></textarea>
+  </div>
+
+  <script src="../../lemonad/lib/lemonad.js"></script>
+  <script src="lib/codd.js"></script>
+  <script>
+    // Example snippets used to populate the DB and Query panes
+    const EXAMPLES = {
+      simple: {
+        db: '[\n  {"a": 1, "b": 2},\n  {"a": 2, "b": 4}\n]',
+        query: "Codd.RQL.select(['a'])(CODD_DB);"
+      },
+      natural: {
+        db: '{\n  "people": [\n    {"id": 1, "name": "Alice", "deptId": 10},\n    {"id": 2, "name": "Bob", "deptId": 20},\n    {"id": 3, "name": "Carol", "deptId": 10}\n  ],\n  "depts": [\n    {"deptId": 10, "dept": "Engineering"},\n    {"deptId": 20, "dept": "Sales"}\n  ]\n}',
+        query: 'Codd.naturalJoin(CODD_DB.people, CODD_DB.depts);'
+      },
+      composed: {
+        db: '[\n  {"artist": "Burial", "title": "Archangel", "genre": "dubstep", "year": 2007},\n  {"artist": "Donovan", "title": "Sunshine Superman", "genre": "folk", "year": 1966},\n  {"artist": "Ikonika", "title": "Idiot", "genre": "dubstep", "year": 2010},\n  {"artist": "The Beatles", "title": "Hey Jude", "genre": "rock", "year": 1968}\n] ',
+        query: "Codd.RQL.q(\n  CODD_DB,\n  Codd.RQL.where(Codd.RQL.field('genre', Codd.RQL.like('dubstep'))),\n  Codd.RQL.select(['artist', 'title']),\n  Codd.RQL.as({'title': 'songTitle'})\n);"
+      }
+    };
+
+    const dbTA = document.getElementById('db');
+    const queryTA = document.getElementById('query');
+    const resultsTA = document.getElementById('results');
+    const loadBtn = document.getElementById('loadData');
+    const runBtn = document.getElementById('runQuery');
+    const examplesSel = document.getElementById('examples');
+    const loadExampleBtn = document.getElementById('loadExample');
+
+    loadBtn.addEventListener('click', () => {
+      try {
+        // Parse DB textarea as JSON and assign to global CODD_DB
+        const parsed = JSON.parse(dbTA.value);
+        window.CODD_DB = parsed;
+        resultsTA.value = 'Data loaded. CODD_DB set to parsed JSON.';
+      } catch (err) {
+        resultsTA.value = 'Error parsing JSON:\n' + err;
+      }
+    });
+
+    // Populate DB and Query fields from the selected example
+    function applyExample(name) {
+      if (!name || !EXAMPLES[name]) return;
+      dbTA.value = EXAMPLES[name].db;
+      queryTA.value = EXAMPLES[name].query;
+      resultsTA.value = 'Example "' + name + '" loaded into editors. Click Load Data to parse DB.';
+    }
+
+    examplesSel.addEventListener('change', () => applyExample(examplesSel.value));
+    loadExampleBtn.addEventListener('click', () => applyExample(examplesSel.value));
+
+    runBtn.addEventListener('click', () => {
+      try {
+        if (typeof window.CODD_DB === 'undefined') {
+          resultsTA.value = 'Query error:\nCODD_DB is not defined. Load DB first.';
+          return;
+        }
+        const result = eval(queryTA.value);
+        resultsTA.value = JSON.stringify(result, null, 2);
+      } catch (err) {
+        resultsTA.value = 'Query error:\n' + err;
+      }
+    });
+  </script>
+</body>
+</html>
